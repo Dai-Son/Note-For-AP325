@@ -330,7 +330,7 @@ long long again_again( int Left , int Right ) // Left 為左端點位置 Right �
 ##### 筆記
 這邊比較重要的應該是lower_bound&upper_bound的用法
 ***
-* 【用途】針對**「已經排序」**的資料進行binary search。
+* 【用途】針對 **「已經排序」** 的資料進行binary search。
 	* vector <int> v;
 	* sort(v.begin(), v.end());
 * **lower_bound**：找出vector中「大於或等於」val的「最小值」的位置：
@@ -338,7 +338,7 @@ long long again_again( int Left , int Right ) // Left 為左端點位置 Right �
 * **upper_bound**：找出vector中「大於」val的「最小值」的位置：
 	* auto it = upper_bound(v.begin(), v.end(), val);
 ***
-<p align="right">-引自 [YUI HUANG 演算法學習筆記](http://https://yuihuang.com/cpp-algorithm-lower-bound-upper-bound/ "YUI HUANG 演算法學習筆記")</p>
+<p align="right">-引自 <a href="http://https://yuihuang.com/cpp-algorithm-lower-bound-upper-bound/">YUI HUANG 演算法學習筆記</a></p>
 
 以過去考APCS實作105、120來講
 我感覺二分搜尋法是很常考 很常運用到的東西
