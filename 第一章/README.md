@@ -1,4 +1,4 @@
-# 第一章 
+# 第一章
 小提醒 善用ctrl+F :>
 ## P-1-1
 ### 題目
@@ -81,7 +81,7 @@ int main()
 {
 	ios::sync_with_stdio(0);
 	cin.tie(0); // cin優化加速
-	
+
 	cout << again_again() << endl;
 	return 0;
 }
@@ -90,16 +90,16 @@ int again_again(void)
 {
 	string str;
 	int x,y;
-	
+
 	cin >> str;
-	
+
 	if( str[0] == 'f' ){
 		x = again_again();
-		return 2*x - 1; 
+		return 2*x - 1;
 	}if( str[0] == 'g' ){
 		x = again_again();
 		y = again_again();
-		return x + 2*y - 3; 
+		return x + 2*y - 3;
 	}
 	//如果不是f或g則返回數字
 	return atoi(str.c_str()); //@
@@ -220,6 +220,7 @@ Time limit: 1 秒
 輸出：切割總成本點。
 ### 作法
 ##### 教授作法
+線性搜尋
 ```cpp
 // p_1_3a, linear search middle-point
 #include <cstdio>
@@ -248,32 +249,98 @@ int main() {
 }
 
 ```
+二分搜尋
 ```cpp
-// p 1.1b
-#include <stdio.h>
+// p_1_3, binary search middle-point
+#include <cstdio>
+#define N 50010
+typedef long long LL;
+LL p[N];
 
-int eval(){
-    int val, x, y, z;
-    char c;
-    // first try to read an int, if successful, return the int
-    if (scanf("%d",&val) == 1) {
-        return val;
+// find the cut in (left,right), and then recursively
+LL cut(int left, int right) {
+    if (right-left<=1) return 0;
+    int m=left;
+    LL k=(p[right]+p[left])/2;
+    for (int jump=(right-left)/2;jump>0; jump>>=1) {
+        while (m+jump<right && p[m+jump]<k)
+            m+=jump;
     }
-    // otherwise, it is a function name: f or g
-    scanf("%c", &c);
-    if (c == 'f') {
-        x = eval(); // f has one variable
-        return 2*x-1;
-    } else if (c == 'g') {
-        x = eval(); // g has two variables
-        y = eval();
-        return x + 2*y -3;
-    }
+    if (p[m]-p[left] < p[right]-p[m+1])
+        m++;
+    return p[right]-p[left] + cut(left, m) + cut(m, right);
 }
 
 int main() {
-    printf("%d\n",eval());
-    return 0;
+	int i, n, l;
+    scanf("%d%d", &n, &l);
+    p[0]=0; p[n+1]=l;
+    for (i=1; i<=n; i++) scanf("%lld", &p[i]);
+    printf("%lld\n",cut(0, n+1));
+	return 0;
 }
 
 ```
+
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+long long again_again( int Left , int Right );
+
+int line[50002];
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int N,L;
+	int i;
+
+	cin >> N >> L;
+	line[0] = 0;
+	line[N+1] = L; // 0 和 L 皆視為切點 方便後續處理
+	for( i = 1 ; i <= N ; i++ ) cin >> line[i];
+
+	cout << again_again(0 , N+1) << endl;
+
+	return 0;
+}
+
+long long again_again( int Left , int Right ) // Left 為左端點位置 Right 為右
+{
+	long long length;
+	int mid, pos;
+
+	if ( Right - Left <= 1 ) return 0; // 切完了 長度<1
+
+	length = line[Right] - line[Left]; // 長度
+
+	mid = (line[Left] + line[Right])/2　// 中點位置
+	pos = lower_bound(line+Left, line+Right,mid) - line; // 找到 ">=" mid值的最小位置 Ex 1,2,3,4,4,5 找 4 輸出 3
+
+	if(line[pos-1] - line[Left] >= line[Right] - line[pos]) pos--; // 確定pos-1位置是不是更接近 依照題目寫
+
+	return length + again_again(Left, pos) + again_again(pos, Right);// 切完後 繼續遞迴
+
+}
+```
+##### 筆記
+這邊比較重要的應該是lower_bound&upper_bound的用法
+***
+* 【用途】針對**「已經排序」**的資料進行binary search。
+	* vector <int> v;
+	* sort(v.begin(), v.end());
+* **lower_bound**：找出vector中「大於或等於」val的「最小值」的位置：
+	* auto it = lower_bound(v.begin(), v.end(), val);
+* **upper_bound**：找出vector中「大於」val的「最小值」的位置：
+	* auto it = upper_bound(v.begin(), v.end(), val);
+***
+<p align="right">-引自 [YUI HUANG 演算法學習筆記](http://https://yuihuang.com/cpp-algorithm-lower-bound-upper-bound/ "YUI HUANG 演算法學習筆記")</p>
+
+以過去考APCS實作105、120來講
+我感覺二分搜尋法是很常考 很常運用到的東西
+不論是自己寫出來或lower_bound都要學著
+給自己一個小提醒 能不DFS就不DFS 太常被TLE了 ; ;
