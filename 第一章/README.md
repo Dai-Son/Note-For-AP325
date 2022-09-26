@@ -130,7 +130,7 @@ if (cin >> IF_int){
 
 有空要去惡補一下scanf的用法了 ; ;
 ## Q-1-2
-###題目
+### 題目
 Q-1-2. 合成函數(2) (APCS201902)
 
 令 f(x)=2x–3；g(x,y)=2x+y–7；h(x,y,z)=3x–2y+z。本題要計算一個合成函
@@ -327,20 +327,104 @@ long long again_again( int Left , int Right ) // Left 為左端點位置 Right �
 
 }
 ```
-##### 筆記
+##### 筆記(@@)
 這邊比較重要的應該是lower_bound&upper_bound的用法
 ***
+
 * 【用途】針對 **「已經排序」** 的資料進行binary search。
+
 	* vector <int> v;
+	
 	* sort(v.begin(), v.end());
+	
 * **lower_bound**：找出vector中「大於或等於」val的「最小值」的位置：
+
 	* auto it = lower_bound(v.begin(), v.end(), val);
+	
 * **upper_bound**：找出vector中「大於」val的「最小值」的位置：
+
 	* auto it = upper_bound(v.begin(), v.end(), val);
+	
 ***
 <p align="right">-引自 <a href="http://https://yuihuang.com/cpp-algorithm-lower-bound-upper-bound/">YUI HUANG 演算法學習筆記</a></p>
 
-以過去考APCS實作105、120來講
+以過去考APCS實作105、120數次的經驗來講
+
 我感覺二分搜尋法是很常考 很常運用到的東西
+
 不論是自己寫出來或lower_bound都要學著
+
 給自己一個小提醒 能不DFS就不DFS 太常被TLE了 ; ;
+
+二分搜尋法的概念就如其名 就是一直二分/切半來做搜尋
+
+依靠中點的值比你要找的值大還小來決定要往前找還是往後找
+
+圖像化就像是這樣
+[![二分搜尋法](https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_search_into_array.png "二分搜尋法")](https://commons.wikimedia.org/wiki/File:Binary_search_into_array.png#mw-jump-to-license "二分搜尋法")
+
+<p align="right">-引自 <a href="https://commons.wikimedia.org/wiki/File:Binary_search_into_array.png#mw-jump-to-license">Tushe2000 - Binary search in a sorted array </a></p>
+
+要二分搜前 因為要用到相對的大小 所以記得**要Sorted要Sorted要Sorted**
+
+## Q_1_4
+### 題目
+[![題目](https://cdn.discordapp.com/attachments/988162819679715408/1023553904564240384/Q_1_4.PNG "題目")](https://judge.tcirc.tw/ShowProblem?problemid=d004)
+
+### 作法
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);//其實寫在裡面就好 這樣只是方便複製w
+
+int again_again( int L, int R, int level);
+
+int n, k;
+int p[50001];
+long long lps[50000], rps[50000];
+
+int main(void){
+	
+	int i;
+	
+	StarBurstStream
+	
+	cin >> n >> k;
+	for( i = 0 ; i < n ; i++ ) cin >> p[i];
+	cout << again_again( 0, n-1, 1) << '\n';
+	
+	return 0;
+	
+}
+int again_again( int L, int R, int level ){
+	
+	int i;
+	long long delta;
+	long long cost, minimal = ((long long)1 << 63)-1;
+	int cut;
+	
+	if( level > k || R - L < 2 ) return 0;
+	
+	delta = lps[L] = 0;
+	for( i = L+1; i <= R; i++ ){
+		delta += p[i-1];
+		lps[i] = lps[i-1] + delta;
+	}
+	delta = rps[R] = 0;
+	for( i = R-1; i>=L; i-- ){
+		delta += p[i+1];
+		rps[i] = rps[i+1] + delta;
+	}
+	
+	for( i = L+1; i <= R-1; i++ ){
+		cost = abs(rps[i]-lps[i]);
+		if( cost < minimal ){
+			minimal = cost;
+			cut = i;
+		}
+	}
+	
+	return p[cut]+again_again(L, cut-1, level+1)+again_again(cut+1, R, level+1);
+}
+```
