@@ -361,6 +361,7 @@ long long again_again( int Left , int Right ) // Left 為左端點位置 Right �
 依靠中點的值比你要找的值大還小來決定要往前找還是往後找
 
 圖像化就像是這樣
+
 [![二分搜尋法](https://upload.wikimedia.org/wikipedia/commons/f/f7/Binary_search_into_array.png "二分搜尋法")](https://commons.wikimedia.org/wiki/File:Binary_search_into_array.png#mw-jump-to-license "二分搜尋法")
 
 <p align="right">-引自 <a href="https://commons.wikimedia.org/wiki/File:Binary_search_into_array.png#mw-jump-to-license">Tushe2000 - Binary search in a sorted array </a></p>
@@ -376,7 +377,7 @@ long long again_again( int Left , int Right ) // Left 為左端點位置 Right �
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
-#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);//其實寫在裡面就好 這樣只是方便複製w
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0); //其實寫在裡面就好 這樣只是方便複製w
 
 int again_again( int L, int R, int level);
 
@@ -401,7 +402,7 @@ int again_again( int L, int R, int level ){
 	
 	int i;
 	long long delta;
-	long long cost, minimal = ((long long)1 << 63)-1;
+	long long cost, minimal = ((long long)1 << 63)-1; //(1<<63)=2^63
 	int cut;
 	
 	if( level > k || R - L < 2 ) return 0;
@@ -411,6 +412,16 @@ int again_again( int L, int R, int level ){
 		delta += p[i-1];
 		lps[i] = lps[i-1] + delta;
 	}
+	/*
+	  假設數列是a b c d e
+	  設切點在1 也就是b的位置
+	  算b左邊(p[i]-(i-m))的和就是a
+	  設切點在2 也就是c的位置
+	  算c左邊(p[i]-(i-m))的和就是2a + b
+	  所以用delta紀錄累加和 (切點在1時 = a 在2時= a+b)
+	  再另外創建lps紀錄delta累加 (切點在1時 = a 在2時= 2a + b)
+	  rps同理
+	*/
 	delta = rps[R] = 0;
 	for( i = R-1; i>=L; i-- ){
 		delta += p[i+1];
@@ -418,7 +429,7 @@ int again_again( int L, int R, int level ){
 	}
 	
 	for( i = L+1; i <= R-1; i++ ){
-		cost = abs(rps[i]-lps[i]);
+		cost = abs(rps[i]-lps[i]); //abs(x) => 返回x的絕對值
 		if( cost < minimal ){
 			minimal = cost;
 			cut = i;
