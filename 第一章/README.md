@@ -331,7 +331,7 @@ long long again_again( int Left , int Right ) // Left 為左端點位置 Right �
 
 要二分搜前 因為要用到相對的大小 所以記得**要Sorted要Sorted要Sorted**
 
-## Q_1_4
+## Q-1-4
 ### 題目
 [![題目](https://cdn.discordapp.com/attachments/988162819679715408/1023553904564240384/Q_1_4.PNG "Q-1-4")](https://judge.tcirc.tw/ShowProblem?problemid=d004)
 
@@ -402,7 +402,7 @@ int again_again( int L, int R, int level ){
 	return p[cut]+again_again(L, cut-1, level+1)+again_again(cut+1, R, level+1);
 }
 ```
-## Q_1_5
+## Q-1-5
 ### 題目
 [![Q-1-5](https://cdn.discordapp.com/attachments/988162819679715408/1024000499999055942/unknown.png "Q-1-5")](https://judge.tcirc.tw/ShowProblem?problemid=d005 "Q-1-5")
 
@@ -461,4 +461,137 @@ int again_again( int L, int R, int level ){
 			again_again(n/2);
 		}
 	}
+```
+## P-1-6
+### 題目
+![P-1-6](https://cdn.discordapp.com/attachments/988162819679715408/1024709032222666802/unknown.png "P-1-6")
+
+(TCIRC未收錄)
+
+##### 筆記
+
+其實我在前面的[Q-1-4](https://github.com/Dai-Son/Personal-Note-For-AP325/tree/main/第一章#作法-3 "Q-1-4")就用過前綴和(prefix-sum)的用法了
+
+可以看裡面的delta就是前綴和的運用
+
+而這邊求區間和就是用一個ps[n]來分別記錄陣列的 A[1] , A[1]+A[2] , ....... , A[1]+A[2]+...+A[n] 的和
+
+EX: ps[0] = A[1], ps[1] = A[1] + A[2], ps[n] = A[1] + A[2] + ........ + A[n]
+
+後再用這些值來計算其中區間的和
+
+EX: 我要求第3個到第5個數字之和就會是 ps[4] ( A[1] ~ A[5] 的和 ) - ps[1] ( A[1] ~ A[2] 的和 )
+## P-1-7
+### 題目
+[![P-1-7](https://cdn.discordapp.com/attachments/988162819679715408/1024721166650323044/unknown.png "P-1-7")](https://judge.tcirc.tw/ShowProblem?problemid=d006 "P-1-7")
+### 作法
+##### 教授作法
+**從這邊起我會自己幫教授的code加上中文註解 如果想看原程式請去[教授的google drive](https://drive.google.com/drive/u/0/folders/10hZCMHH0YgsfguVZCHU7EYiG8qJE5f-m "教授的google drive")找**
+
+迴圈
+```cpp
+// subset product = 1 mod P, using loop
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n, ans=0;
+    long long P=10009, A[26];
+    scanf("%d", &n);
+    for (int i=0;i<n;i++) scanf("%lld", &A[i]);
+    for (int s=1; s< (1<<n); s++) { 
+        /*
+          s表所有二進位組合方式
+          例假設n是8 則s最大值為255 ( 二進位 1111 1111 )
+          最小為 1 ( 二進位 0000 0001 )
+          所以會一路跑過 8位所有的0和1組合
+        */
+        long long prod=1; // 每作完一次要歸1給下一個組合用
+        for (int j=0;j<n;j++) {
+            if (s & (1<<j)) 
+            /*
+              &-按位與
+              0001 & 1010 = 0000 (0)
+              0001 & 1011 = 0001 (1)
+              1010 & 1000 = 1000 (8)
+              
+              1<< j 表示 第j位bit為1 (2的j次)
+              1<<0 0001 (1)
+              1<<3 1000 (8)
+              
+              所以這邊if (s & (1<<j))
+              是在檢測哪幾位是1哪幾位是0
+              以達到檢測每一種組合的作法
+            */
+                prod = (prod*A[j])%P;
+        }
+        if (prod==1) ans++;
+    }
+    printf("%d\n", ans);
+}
+
+```
+
+遞迴
+```cpp
+// subset product = 1 mod P, using recursion
+#include<bits/stdc++.h>
+using namespace std;
+int n, ans=0;
+long long P=10009, A[26];
+// for i-th element, current product=prod
+void rec(int i, int prod) {
+    if (i>=n) { // terminal condition
+        if (prod==1) ans++;
+        return;
+    }
+    rec(i+1, (prod*A[i])%P); // select A[i]
+    rec(i+1, prod); // discard A[i]
+    return;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i=0;i<n;i++) scanf("%lld", &A[i]);
+    ans=0;
+    rec(0,1);
+    printf("%d\n", ans-1); // -1 for empty subset
+    return 0;
+}
+```
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+void recur( int i , long long p );
+
+int n, ans;
+long long A[26];
+
+
+int main(void){
+	int i;
+	
+	StarBurstStream
+	
+	cin >> n;
+	for( i = 0 ; i < n ; i++ ) cin >> A[i];
+	
+	recur( 0 , 1 );
+	
+	cout << ans-1 << '\n';
+	
+	return 0;
+}
+
+void recur( int i, long long p ){
+	if ( i >= n ){
+		if( p == 1 ) ans++;
+	}else{
+		recur( i + 1 , ( p*A[i] ) % 10009 );
+		recur( i + 1 , p );
+	}
+}
 ```
