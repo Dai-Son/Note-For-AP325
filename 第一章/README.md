@@ -581,7 +581,7 @@ int main(void){
 	
 	recur( 0 , 1 );
 	
-	cout << ans-1 << '\n';
+	cout << ans-1 << '\n'; //全不選的情況下 p還是等於1 所以輸出要減1
 	
 	return 0;
 }
@@ -590,8 +590,58 @@ void recur( int i, long long p ){
 	if ( i >= n ){
 		if( p == 1 ) ans++;
 	}else{
-		recur( i + 1 , ( p*A[i] ) % 10009 );
-		recur( i + 1 , p );
+		recur( i + 1 , ( p*A[i] ) % 10009 ); //選
+		recur( i + 1 , p ); //不選
 	}
 }
 ```
+#####筆記
+
+窮舉的問題在這種情況下就是把所有可能列出來
+
+而迴圈的做法就像是在列樹狀圖一樣
+
+把所有的可能性都試一遍後 用ans紀錄有多少個符合條件
+
+## Q-1-8
+### 題目
+[![Q-1-8](https://cdn.discordapp.com/attachments/988162819679715408/1025077066514833539/unknown.png "Q-1-8")](https://judge.tcirc.tw/ShowProblem?problemid=d007 "Q-1-8")
+#####我的作法
+```cpp
+#include <bits/stdc++.h>
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+using namespace std;
+
+int n,p,A[26];
+int CalcMx;
+
+void solve( int where , int calc ){
+	if( where >= n ){
+		if ( calc <= p ){
+			CalcMx = max( calc, CalcMx );
+		}
+		return;
+	}	
+	solve( where + 1 , calc + A[where] ); // 選
+	solve( where + 1 , calc); // 不選
+}
+
+
+int main(void){
+	
+	StarBurstStream
+	
+	cin >> n >> p;
+	for( int i = 0; i < n ; i++ ){
+		cin >> A[i];
+	}
+	CalcMx = 0;
+	solve( 0 , 0 );
+	cout << CalcMx << '\n';
+	return 0;      
+}
+```
+#####筆記
+
+同P-1-7
