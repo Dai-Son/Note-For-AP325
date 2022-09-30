@@ -297,17 +297,17 @@ long long again_again( int Left , int Right ) // Left 為左端點位置 Right �
 * 【用途】針對 **「已經排序」** 的資料進行binary search。
 
 	* vector <int> v;
-	
+
 	* sort(v.begin(), v.end());
-	
+
 * **lower_bound**：找出vector中「大於或等於」val的「最小值」的位置：
 
 	* auto it = lower_bound(v.begin(), v.end(), val);
-	
+
 * **upper_bound**：找出vector中「大於」val的「最小值」的位置：
 
 	* auto it = upper_bound(v.begin(), v.end(), val);
-	
+
 ***
 <p align="right">-引自 <a href="http://https://yuihuang.com/cpp-algorithm-lower-bound-upper-bound/">YUI HUANG 演算法學習筆記</a></p>
 
@@ -349,27 +349,27 @@ int p[50001];
 long long lps[50000], rps[50000];
 
 int main(void){
-	
+
 	int i;
-	
+
 	StarBurstStream
-	
+
 	cin >> n >> k;
 	for( i = 0 ; i < n ; i++ ) cin >> p[i];
 	cout << again_again( 0, n-1, 1) << '\n';
-	
+
 	return 0;
-	
+
 }
 int again_again( int L, int R, int level ){
-	
+
 	int i;
 	long long delta;
 	long long cost, minimal = ((long long)1 << 63)-1; //(1<<63)=2^63
 	int cut;
-	
+
 	if( level > k || R - L < 2 ) return 0;
-	
+
 	delta = lps[L] = 0;
 	for( i = L+1; i <= R; i++ ){
 		delta += p[i-1];
@@ -390,7 +390,7 @@ int again_again( int L, int R, int level ){
 		delta += p[i+1];
 		rps[i] = rps[i+1] + delta;
 	}
-	
+
 	for( i = L+1; i <= R-1; i++ ){
 		cost = abs(rps[i]-lps[i]); //abs(x) => 返回x的絕對值
 		if( cost < minimal ){
@@ -398,7 +398,7 @@ int again_again( int L, int R, int level ){
 			cut = i;
 		}
 	}
-	
+
 	return p[cut]+again_again(L, cut-1, level+1)+again_again(cut+1, R, level+1);
 }
 ```
@@ -411,51 +411,51 @@ int again_again( int L, int R, int level ){
 ```cpp
 #include <bits/stdc++.h>
 	using namespace std;
-	
+
 	void again_again( int n );
 	string in;
 	int p, black; //開在 int main()外 預設為0
-	
+
 	int main( void ){
-		
+
 		ios::sync_with_stdio(0);
 		cin.tie(0);
 		cout.tie(0);
-		
+
 		int n;
 		cin >> in >> n;
 		again_again(n);
-		
+
 		cout << black << endl;
 	}
 // return; 代表函式結束
 	void again_again( int n ){
 		int i;
-		
+
 		if( n == 0 ) return; //根據題意 n<1不存在 *int有小數時 無條件捨去*
-		
+
 		/*
 		  設 1 or 0 為in的第一位
 		  輸出則為 n*n or 0 無誤
-		  
+
 		  設2為 為in的第一位
 		  則會遞迴n/2四次 分別求四塊是不是黑色的
 		  以此類推
 		*/
 		if( in[p] == '0'){
 			p++;
-			
+
 			return;
 		}
-		
+
 		if( in[p] == '1'){
 			p++;
-			
+
 			black += n*n;
-			
+
 			return;
 		}
-		
+
 		p++;
 		for( i = 0 ; i <= 3 ; i++ ){ //四次
 			again_again(n/2);
@@ -499,7 +499,7 @@ int main() {
     long long P=10009, A[26];
     scanf("%d", &n);
     for (int i=0;i<n;i++) scanf("%lld", &A[i]);
-    for (int s=1; s< (1<<n); s++) { 
+    for (int s=1; s< (1<<n); s++) {
         /*
           s表所有二進位組合方式
           例假設n是8 則s最大值為255 ( 二進位 1111 1111 )
@@ -508,17 +508,17 @@ int main() {
         */
         long long prod=1; // 每作完一次要歸1給下一個組合用
         for (int j=0;j<n;j++) {
-            if (s & (1<<j)) 
+            if (s & (1<<j))
             /*
               &-按位與
               0001 & 1010 = 0000 (0)
               0001 & 1011 = 0001 (1)
               1010 & 1000 = 1000 (8)
-              
+
               1<< j 表示 第j位bit為1 (2的j次)
               1<<0 0001 (1)
               1<<3 1000 (8)
-              
+
               所以這邊if (s & (1<<j))
               是在檢測哪幾位是1哪幾位是0
               以達到檢測每一種組合的作法
@@ -573,16 +573,16 @@ long long A[26];
 
 int main(void){
 	int i;
-	
+
 	StarBurstStream
-	
+
 	cin >> n;
 	for( i = 0 ; i < n ; i++ ) cin >> A[i];
-	
+
 	recur( 0 , 1 );
-	
+
 	cout << ans-1 << '\n'; //全不選的情況下 p還是等於1 所以輸出要減1
-	
+
 	return 0;
 }
 
@@ -622,16 +622,16 @@ void solve( int where , int calc ){
 			CalcMx = max( calc, CalcMx );
 		}
 		return;
-	}	
+	}
 	solve( where + 1 , calc + A[where] ); // 選
 	solve( where + 1 , calc); // 不選
 }
 
 
 int main(void){
-	
+
 	StarBurstStream
-	
+
 	cin >> n >> p;
 	for( int i = 0; i < n ; i++ ){
 		cin >> A[i];
@@ -639,9 +639,43 @@ int main(void){
 	CalcMx = 0;
 	solve( 0 , 0 );
 	cout << CalcMx << '\n';
-	return 0;      
+	return 0;
 }
 ```
 #####筆記
 
 同P-1-7
+
+## P-1-9
+### 題目
+![P-1-9](https://cdn.discordapp.com/attachments/988162819679715408/1025282975518183464/unknown.png "P-1-9")
+
+(TCIRC未收錄)
+
+#####筆記
+這邊教授在解釋 字典順序(lexicographic order) 和教 庫存函數(next_permutation()) 的用法
+
+字典順序就是把有一整串排列依照在字典順序進行排列的方法
+
+換個方式說明一下 我們先來講比大小
+
+-------
+
+從**單個字元**來看
+```
+'0' < '1' < '2' < '3' ...... < 'a' < 'b' < 'c' ...... < 'z'
+```
+
+從**多個字元**來看
+
+從左邊往右比 比到有結果為止
+
+如果第1位相等 就比較第2位 直至有一位可以比較出大小來 則不再繼續比較。
+```
+'ab' < 'ac'  'abc' < 'ac' // 從左往右比 比到第二位  'app' < 'apple' // 從左往右比 比到第四位 空視為最小
+```
+
+**排序**
+```
+
+```
