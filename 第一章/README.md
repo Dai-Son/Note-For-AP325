@@ -676,6 +676,25 @@ int main(void){
 ```
 
 **排序**
+由最小的一路排到最大
+
+詳細的作法就是
+
+[![字典排序](https://img-blog.csdnimg.cn/20181101133823660.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhcHB5Um9ja2luZw==,size_16,color_FFFFFF,t_70 "字典排序")](https://www.796t.com/content/1541608144.html "字典排序")
+```
+'abc' => 'acb' => 'bac' => 'bca' => 'cab' => 'cba'
 ```
 
-```
+-------
+
+<p align="right">-引自 <a href="https://www.796t.com/content/1541608144.html">程式人生 > > 字典序演算法詳解</a></p>
+
+庫存函數(next_permutation())便是利用整個過程
+
+生成n個數的全排列
+
+但要注意的是 假設拿它當作布林值(boolean) 循環時會當作false
+
+也就是說 假設循環 string a[3] = { c , b , a }
+
+while ( next_permutation( a , a + 3 ) )會跳出while
