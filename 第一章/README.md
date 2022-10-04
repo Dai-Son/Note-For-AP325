@@ -693,8 +693,45 @@ int main(void){
 
 生成n個數的全排列
 
+範例如下
+```cpp
+int a[3] = { 1 , 2 , 3 }
+string b[3] = { a , b , c }
+int c[3] = { 3 , 2 , 1 }
+string d[3] = { c , b , a }
+
+next_permutation(a,a+3)
+next_permutation(b,b+3)
+next_permutation(c,c+3)
+next_permutation(d,d+3)
+
+/*
+*******
+result
+*******
+*/
+
+a[3] == { 1 , 3 , 2 }
+b[3] == { a , c , b }
+c[3] == { 1 , 2 , 3 }
+d[3] == { a , b , c }
+```
+
+
 但要注意的是 假設拿它當作布林值(boolean) 循環時會當作false
 
-也就是說 假設循環 string a[3] = { c , b , a }
+也就是說 假設 string a[3] = { c , b , a }
 
 while ( next_permutation( a , a + 3 ) )會跳出while
+
+接著我們看皇后的攻擊模式
+
+![Queen](https://cdn.discordapp.com/attachments/988162819679715408/1026900399548006460/unknown.png "Queen")
+
+看到這張圖也不難理解為什麼會用到字典序了吧
+
+只要今天皇后要在互不攻擊的情況下做全排列
+
+他們必然要在不同列或行
+
+所以我們只要做pos[N]個數的全排列 就能窮舉完所有有可能的排列了
