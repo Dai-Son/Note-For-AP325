@@ -735,3 +735,135 @@ while ( next_permutation( a , a + 3 ) )會跳出while
 他們必然要在不同列或行
 
 所以我們只要做pos[N]個數的全排列 就能窮舉完所有有可能的排列了
+
+教授作法,窮舉 (即逐行討論)
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int nq(int n) {
+    int p[14], total=0;
+    for (int i=0;i<n;i++) p[i]=i; //first permutation
+    do {
+    // check valid
+        bool valid=true;
+        for (int i=0; i<n; i++) for (int j=i+1;j<n;j++)
+            if (abs(p[i]-p[j])==j-i) { // one the same diagonal
+                valid=false;
+                break;
+            }
+        if (valid) total++;
+    }while (next_permutation(p, p+n)); // until no-next
+    return total;
+}
+int main() {
+    for (int i=1;i<12;i++)
+    printf("%d ",nq(i));
+    return 0;
+}
+```
+教授作法,遞迴 (個人註解)
+```cpp
+// number of n-queens, recursion
+#include<bits/stdc++.h>
+using namespace std;
+// k 表現在查證到哪一"行", p[] 表他被放在前面"行"的"列" EX p[a] == b 被放在第a行的第b個
+int nqr(int n, int k, int p[]) {
+    if (k>=n) return 1; // 排完最後一行了 回傳1(total++)
+    int total=0;
+    for (int i=0;i<n;i++) { // 試每一欄可不可以放
+        // 檢查可行性
+        bool valid=true;
+        for (int j=0;j<k;j++)
+            if (p[j]==i || abs(i-p[j])==k-j) {
+                valid=false;
+                break;
+            }
+        if (!valid/*vaild == false*/) continue; //不行了就檢查下一行
+        p[k]=i; //p
+        total+=nqr(n,k+1,p);
+    }
+    return total;
+}
+int main() {
+    int p[15];
+    for (int i=1;i<12;i++)
+    printf("%d ",nqr(i,0,p));
+    return 0;
+}
+```
+
+另外 教授還有寫了一個更快的方法
+
+需要可以自己點開AP325看歐
+## Q-1-10
+### 題目
+[![Q-1-10](https://cdn.discordapp.com/attachments/988162819679715408/1031977463590420520/unknown.png "Q-1-10")](https://judge.tcirc.tw/ShowProblem?problemid=d008 "Q-1-10")
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+using namespace std;
+
+void again_nq( int n, int k, int p[]);
+
+int chessboard[14][14];
+int score;
+
+int main(void){
+
+	StarBurstStream
+
+	int n;
+	int i, j;
+	int p[14];
+
+	cin >> n;
+	for( i = 0 ; i < n ; i++ ){
+		for( j = 0 ; j < n ; j++ ){
+			cin >> chessboard[i][j]; //紀錄分數
+		}
+	}
+
+	again_nq( n, 0 ,p ); //遞迴 ( n, 0, p[]) n表共有多少行 0表在第幾行 p[]紀錄在哪行放哪列
+	cout << score << '\n';
+
+	return 0;
+}
+
+void again_nq( int n, int k, int p[])
+{
+    //vaild確定可行性
+	bool vaild[14];
+	int i,j;
+	int t;
+
+	if( k >= n ){
+		t = 0;
+		for( i = 0 ; i < n ; i++ ){
+			t += chessboard[i][p[i]];
+		}
+		score = max(score , t );
+		return;
+	}
+
+	for( i = 0 ; i <= n ; i++ ) vaild[i] = true; //重置
+
+	for( j = 0 ; j < k ; j++ ){ //標註哪裡不能放
+		vaild[p[j]] = false;
+
+		i = ( k - j ) + p[j];
+		if( i < n ) vaild[i] = false;
+
+		i = p[j] - ( k - j );
+		if( i >= 0 ) vaild[i] = false;
+	}
+
+	for( i = 0; i <= n ; i++ ){
+		if( vaild[i] ){ //如果可以放這位置的話 討論下一行
+
+			p[k] = i;
+			again_nq( n , k+1 , p );
+		}
+	}
+}
+```
