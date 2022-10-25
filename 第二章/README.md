@@ -38,3 +38,45 @@ int main() {
 }
 
 ```
+#####我的作法
+```cpp
+#include <bits/stdc++.h>
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+using namespace std;
+
+signed main(void){
+
+	int i;
+
+	int n;
+	vector<int> vec;
+	int push;
+	int count;
+
+	StarBurstStream
+
+	cin >> n;
+	for( i = 0 ; i < n ; i++ ){
+		cin >> push;
+		vec.push_back(push);
+	}
+	sort( vec.begin () , vec.end() );
+	count = unique( vec.begin () , vec.end() ) - vec.begin();
+    //or count = distance( vec.begin () , unique( vec.begin () , vec.end() ) ) ;
+
+	cout << count << '\n';
+	for( i = 0 ; i < count ; i++ ){
+		cout << vec[i] << ' ';
+	}
+	return 0;
+
+}
+```
+##### 筆記
+教授的寫法我就不多講了
+
+基本上就是sort後檢查 i 和 i-1的位置一不一樣就記錄到另一個容器後輸出
+
+那我的寫法用了&lt;algorithm&gt;的unique函數
+
+unique函數用於刪除在range [First，Last)**連續**(所以要sort)存在的重複項
