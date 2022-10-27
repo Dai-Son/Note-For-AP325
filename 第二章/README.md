@@ -214,7 +214,7 @@ int main() {
 
 測資只要大一點 replace的速度就會跟lower_bound拉開差距
 
-tl;dr 考試建議乖乖用lower_bound 不會多多少行
+**tl;dr 考試建議乖乖用lower_bound 不會多多少行 但可以避免TLE**
 ```cpp
 d011. 例題 P-2-2. 離散化 – sort -- AP325
 #include <bits/stdc++.h>
@@ -253,3 +253,8 @@ signed main(void){
 }
 ```
 ##### 筆記
+這邊又双提到了二分法
+
+而我在第一章的筆記已經提過了
+
+詳情可以點[這裡](https://github.com/Dai-Son/Personal-Note-For-AP325/tree/main/第一章#筆記-1 "這裡")
