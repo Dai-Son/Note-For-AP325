@@ -300,11 +300,11 @@ long long again_again( int Left , int Right ) // Left 為左端點位置 Right �
 
 	* sort(v.begin(), v.end());
 
-* **lower_bound**：找出vector中「大於或等於」val的「最小值」的位置：
+* **lower_bound**：找出vector中「大於或等於」val的「最小值」的指標：
 
 	* auto it = lower_bound(v.begin(), v.end(), val);
 
-* **upper_bound**：找出vector中「大於」val的「最小值」的位置：
+* **upper_bound**：找出vector中「大於」val的「最小值」的指標：
 
 	* auto it = upper_bound(v.begin(), v.end(), val);
 
