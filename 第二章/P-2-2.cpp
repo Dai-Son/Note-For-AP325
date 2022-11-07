@@ -1,4 +1,3 @@
-d011. ¨ÒÃD P-2-2. Â÷´²¤Æ ¡V sort -- AP325
 #include <bits/stdc++.h>
 #define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
 using namespace std;

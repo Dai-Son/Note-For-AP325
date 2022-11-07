@@ -258,3 +258,61 @@ signed main(void){
 而我在第一章的筆記已經提過了
 
 詳情可以點[這裡](https://github.com/Dai-Son/Personal-Note-For-AP325/tree/main/第一章#筆記-1 "這裡")
+
+另外另外 這邊有用了一個新的資料結構叫做map
+***
+map是一種關聯式容器
+
+會把第一個輸入的key值 和給予的另一個元素連接
+
+EX:
+```cpp
+map<int,int> mp
+//   ^   ^
+//  key 元素 
+```
+
+再透過key值來為搜尋、插入、修改、刪除
+
+而key是唯一值 也就是說一個key只能對應一個值
+
+相關的操作有
+
+    -元素存取
+    operator[]：存取指定的[i]元素的資料
+    -迭代器
+    begin()：回傳指向map頭部元素的迭代器
+    end()：回傳指向map末尾的迭代器
+    rbegin()：回傳一個指向map尾部的反向迭代器
+    rend()：回傳一個指向map頭部的反向迭代器
+    -容量
+    empty()：檢查容器是否為空，空則回傳true
+    size()：回傳元素數量
+    max_size()：回傳可以容納的最大元素個數
+    -修改器
+    clear()：刪除所有元素
+    insert()：插入元素 (要插入pair歐)
+    erase()：刪除一個元素
+    swap()：交換兩個map
+    -查找
+    count()：回傳指定元素出現的次數
+    find()：查找一個元素
+	
+***
+而這題教授即使用**key是唯一值**的概念 把unique的效果寫出
+```cpp
+    map<int,int> S;
+    for (int i=0;i<n;i++)
+        S[a[i]] = 0; // insert a[i] and set rank=0
+    int r=0;
+    // traversal and set rank in second
+    for (auto it=S.begin(); it!=S.end(); ++it) {
+        it->second = r++;
+    }
+    // replace number with its rank
+    for (int i=0;i<n;i++) {
+        a[i] = S.find(a[i]) -> second; // always found
+        // find() return the iterator, then take the rank
+        // or S.lower_bound(a[i]) -> second;
+    }
+```
