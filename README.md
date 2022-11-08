@@ -1,7 +1,7 @@
 # AP325鑽研用筆記
 
 [![License](https://img.shields.io/github/license/Dai-Son/Note-For-AP325?style=for-the-badge&logo=appveyor)](./LICENSE)
-[![Commit](https://img.shields.io/github/commit-activity/m/Dai-Son/Note-For-AP325?style=for-the-badge&logo=appveyor)]
+![Commit](https://img.shields.io/github/commit-activity/m/Dai-Son/Note-For-AP325?style=for-the-badge&logo=appveyor)
 
 ## ⚠前言/警告
 內含大量個人理解及方便記憶之言論/筆記，也許會有些許錯誤
