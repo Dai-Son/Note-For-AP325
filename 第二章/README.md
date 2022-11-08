@@ -82,7 +82,7 @@ signed main(void){
 unique函數用於刪除在range [First，Last)**連續**(所以要sort)存在的重複項
 
 回傳值則是最後一項的指標
-## P-2-1
+## P-2-2
 ### 題目
 [![P-2-2](https://cdn.discordapp.com/attachments/988162819679715408/1034865782376648764/unknown.png "P-2-2")](https://judge.tcirc.tw/ShowProblem?problemid=d011 "P-2-2")
 ##### 教授作法
@@ -257,7 +257,7 @@ signed main(void){
 
 而我在第一章的筆記已經提過了
 
-詳情可以點[這裡](https://github.com/Dai-Son/Personal-Note-For-AP325/tree/main/第一章#筆記-1 "這裡")
+詳情可以點[這裡](https://github.com/Dai-Son/Note-For-AP325/tree/main/第一章#筆記-1 "這裡")
 
 另外另外 這邊有用了一個新的資料結構叫做map
 ***
@@ -299,7 +299,7 @@ map<int,int> mp
     find()：查找一個元素
 	
 ***
-而這題教授即使用**key是唯一值**的概念 把unique的效果寫出
+而這題教授即使用**key是唯一值**的概念 把unique的效果寫出 如下
 ```cpp
     map<int,int> S;
     for (int i=0;i<n;i++)
@@ -315,4 +315,113 @@ map<int,int> mp
         // find() return the iterator, then take the rank
         // or S.lower_bound(a[i]) -> second;
     }
+```
+## P-2-3
+### 題目
+[![P-2-3](https://cdn.discordapp.com/attachments/988162819679715408/1039567446853558392/image.png "P-2-3")](https://judge.tcirc.tw/ShowProblem?problemid=d012 "P-2-3")
+### 作法
+##### 教授作法
+```cpp
+// find x^y mod P, 32-bit positive int x, y, p
+#include <cstdio>
+typedef long long LL;
+LL exp(LL x, LL y, LL p) {
+    if (y==0) return 1;
+    if (y & 1) return (exp(x, y-1,p)*x)%p;
+    // otherwise y is even
+    LL t=exp(x, y/2, p);
+    return (t*t)%p;
+}
+
+LL exp2(LL x,LL y,LL p) {
+    LL t=1, xi=x, i=1; // t is result, xi = x^ (2^i)
+    while (y>0) {
+        if (y & 1) // odd, (i-1)-bit of y = 1
+            t=(t*xi)%p;
+        y>>=1;
+        xi=(xi*xi)%p;
+        i=i*2; // i is useless, for explanation
+    }
+    return t;
+}
+
+int main() {
+	long long x, y, p, res;
+	scanf("%lld%lld%lld", &x, &y, &p);
+	printf("%lld\n",res=exp(x, y,p));
+	if (res!=exp2(x,y,p))
+        fprintf(stderr,"different result");
+    return 0;
+}
+
+```
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define int long long
+using namespace std;
+
+int recur_exp(int x, int y, int p);
+
+signed main(void){
+	
+	StarBurstStream
+	long long x, y, p;
+	
+	cin >> x >> y >> p;
+	cout << recur_exp(x, y, p) << '\n';
+	
+	return 0;
+
+}
+
+int recur_exp(int x, int y, int p)
+{
+	
+	int t;
+	
+	if(p == 1) return 0;
+	if(y == 0) return 1;
+	
+	//y是奇數
+	if(y & 1){
+		return (recur_exp(x,y-1,p)*x) % p;
+	}
+	
+	t = recur_exp(x ,y/2 ,p);
+	return (t*t)%p;
+}
+```
+#####筆記
+數論:skull:
+
+平方求冪(快速冪)的概念在於把指數化為二進制
+
+這樣一來只要知道底數的 $\Theta(\log n)$ 次方就能求出想要的值 進而求模
+
+整理如下
+
+[![快速冪](https://wikimedia.org/api/rest_v1/media/math/render/svg/46fe9e68c70c04df4c3d22c469a57d4655b50539 "快速冪")](https://zh.wikipedia.org/zh-tw/平方求幂 "快速冪")
+
+不適很懂沒關西
+
+以我的這段遞迴為例
+```cpp
+int recur_exp(int x, int y, int p)
+{
+	
+	int t;
+	
+	if(p == 1) return 0;
+	if(y == 0) return 1;
+	
+	//y是奇數
+	if(y & 1){
+		return (recur_exp(x,y-1,p)*x) % p;
+	}
+	
+	t = recur_exp(x ,y/2 ,p);
+	return (t*t)%p;
+}
 ```
