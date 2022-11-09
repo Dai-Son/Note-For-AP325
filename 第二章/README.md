@@ -518,3 +518,6 @@ $$
 $$
 
 後再用上面的快速冪處理
+## Q-2-5
+### 題目
+[![Q-2-5](https://cdn.discordapp.com/attachments/988162819679715408/1039923726315167814/image.png "Q-2-5")](https://judge.tcirc.tw/ShowProblem?problemid=d014 "Q-2-5")
