@@ -452,3 +452,69 @@ $mod$先不看 這邊只看x, y也就是$x^y$
 $$
 3^{19} (3^{(1\ 0011)}) = 3^{16} * 3^2 * 3^1 
 $$
+## P-2-4
+### 題目
+[![Q-2-4](https://cdn.discordapp.com/attachments/988162819679715408/1039914173498392628/image.png "Q-2-4")](https://judge.tcirc.tw/ShowProblem?problemid=d013 "Q-2-4")
+### 作法
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define int long long
+using namespace std;
+
+int recur_exp(int x, int y, int p);
+
+signed main(void){
+
+	StarBurstStream
+	int x, y, p;
+	string s;
+	int i;
+
+    //long long 裝不下200位整數 => 用string裝
+	cin >> s;
+
+	cin >> y >> p;
+
+	//s[0]-'0' 把s的第0位轉換成int
+	x = (s[0]-'0') % p;
+
+    //逐位求模
+	for (i=1; i<s.length(); i++){
+		x = (x*10+(s[i]-'0')) % p;
+	}
+
+	cout << recur_exp(x, y, p) << '\n';
+	return 0;
+
+}
+
+//快速冪
+int recur_exp(int x, int y, int p)
+{
+
+	int t;
+
+	if(p == 1) return 0;
+	if(y == 0) return 1;
+
+	if(y & 1){
+		return (recur_exp(x,y-1,p)*x) % p;
+	}
+
+	t = recur_exp(x ,y/2 ,p);
+	return (t*t)%p;
+}
+```
+##### 筆記
+因輸入的數字極大 所以只能先求模後做次方
+
+模是可以一位一位做的 內容在AP325內有提到
+
+$$
+123\ mod\ p\ = ((1*10+2)*10+3)\ mod\ p \ \ =>\ \ \ ((((1*10\%p+2)\%p)*10\%p+3)\%p
+$$
+
+後再用上面的快速冪處理
