@@ -598,3 +598,19 @@ int fib(int m){
 }
 
 ```
+#####筆記
+根據AP325的內容有提到
+
+![Fibonacci](https://miro.medium.com/max/640/1*mgeTnofXk6e-OK68tRT9VQ.png)
+
+所以我在上面開了vector\<vector\<int\>\> 當作矩陣做處理
+
+最一開始寫是想說用int開
+
+但發現int不能return 數列 矩陣之類的 只能用指標return
+ 
+因此改vector\<vector\<int\>\> 
+
+用法上近無差異
+## P-2-6
+### 題目
