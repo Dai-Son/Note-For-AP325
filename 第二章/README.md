@@ -715,3 +715,50 @@ signed main(void){
 ## Q-2-7
 ### 題目
 [![Q-2-7](https://cdn.discordapp.com/attachments/988162819679715408/1041740217415114794/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d016)
+```cpp
+#include <bits/stdc++.h>
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define int long long
+using namespace std;
+
+int m,n;
+
+signed main(){
+	
+	StarBurstStream
+	
+	unsigned U,team,complement;
+	vector<int> v0;
+	set<int> s0;
+	
+	string str0;
+	int i;
+	int answer;
+	
+	cin >> m >> n;
+	U = ( 1 << m ) - 1;
+	
+	while(n--){
+		cin >> str0;
+		
+		team = 0;
+		for( i = 0 ; i < str0.length() ; i++ ){
+			team |= 1 << str0[i] - 'A'; 
+		}
+		v0.push_back(team);
+		
+		complement = U-team;
+		s0.insert(complement);
+	}
+	
+	answer = 0;
+	for( i = 0 ; i < v0.size() ; i++ ){
+		if( s0.find(v0[i]) != s0.end() ) answer++; 
+	}
+	
+	//cout << ( answer / 2 ) << '\n';
+	cout << ( answer >> 1 ) << '\n';
+	
+	return 0;
+}
+```
