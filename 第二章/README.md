@@ -614,3 +614,104 @@ int fib(int m){
 用法上近無差異
 ## P-2-6
 ### 題目
+[![P-2-6](https://cdn.discordapp.com/attachments/988162819679715408/1041731847756976189/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d015)
+### 作法
+##### 教授作法
+```cpp
+// p_2_6 find a+b=k
+#include <bits/stdc++.h>
+using namespace std;
+#define N 100010
+int a[N], b[N];
+
+int main() {
+    int m, n, k,i;
+    scanf("%d %d %d", &m,&n,&k);
+    //fprintf(stderr,"%d, %d, %d\n",m,n,k);
+    for (i=0;i<m;i++) scanf("%d", a+i);
+    for (i=0;i<n;i++) scanf("%d", b+i);
+    sort(a, a+m); // sort a from small to large
+    sort(b, b+n); // sort b from small to large
+    int j=n-1; // index of b, from n-1 to 0
+    int ans=0;
+    for (i=0; i<m; i++) { // each a[i]
+        while (j>0 && b[j]>k-a[i]) // backward linear search
+            j--;
+        if (a[i]+b[j]==k) {
+            ans++;
+            //fprintf(stderr,"(%d, %d)",a[i],b[j]);
+        }
+    }
+    printf("%d\n",ans);
+	return 0;
+}
+```
+```cpp
+// p_2_6b find a+b=k, using set
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int m, n, k,i,t;
+    scanf("%d %d %d", &m,&n,&k);
+    set<int> S;
+    // read A into set
+    for (i=0;i<m;i++) {
+        scanf("%d", &t);
+        S.insert(t);
+    }
+    int ans=0;
+    for (i=0;i<n;i++) { // for each t in B
+        scanf("%d", &t);
+        if (S.find(k-t)!=S.end()) // search k-t in A
+            ans++;
+    }
+    printf("%d\n",ans);
+	return 0;
+}
+```
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define int long long
+using namespace std;
+
+signed main(void){
+	
+	int m,n,k;
+	int i;
+	int answer = 0;
+	
+	set<int> A;
+	int s;
+	
+	cin >> m >> n >> k;
+	for( i=0; i<m ; i++ ){
+		cin >> s;
+		A.insert(s);
+	} 
+	
+	for( i = 0 ; i < n ; i++ ){
+		cin >> s;
+		//set.find(val) 回傳val在此set的指標 val不存在則回傳set.end()
+		if(A.find(k-s) != A.end()) answer++;
+	}
+	
+	cout << answer << '\n';
+
+	return 0;
+	
+}
+```
+##### 筆記
+教授在AP325內有提供不同的想法來做
+
+而我最後選了用set來做
+
+因為集合每個元素最多只有一個
+
+所以用set.find找是可行的
+## Q-2-7
+### 題目
+[![Q-2-7](https://cdn.discordapp.com/attachments/988162819679715408/1041740217415114794/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d016)
