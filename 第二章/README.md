@@ -717,6 +717,7 @@ signed main(void){
 ## Q-2-7
 ### 題目
 [![Q-2-7](https://cdn.discordapp.com/attachments/988162819679715408/1041740217415114794/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d016)
+##### 我的作法
 ```cpp
 #include <bits/stdc++.h>
 #define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
@@ -797,3 +798,48 @@ signed main(){
 	multiset.erase(multiset.find(val)) ans++
 	
 理應當也能AC
+## Q-2-8
+### 題目
+[![Q-2-8](https://cdn.discordapp.com/attachments/988162819679715408/1042118843079856209/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d017)
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+#define StarBurstStream ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define int long long
+
+int exp(int x, int y, int p);
+signed main(){
+
+    StarBurstStream
+
+    int n, P;
+    cin >> n >> P;
+    while(n--){
+        int in;
+        cin >> in;
+        cout << exp( in, P-2, P ) << " ";
+    }
+    cout << '\n';
+}
+
+int exp(int x, int y, int p){
+
+    if ( y == 0 ) return 1;
+
+    if( y & 1 ) return (exp(x, y-1, p)*x) % p;
+
+    return (exp(x, y/2, p)*exp(x, y/2, p)) % p;
+
+}
+```
+#####  筆記
+這邊用了[快速冪(點我複習)](https://github.com/Dai-Son/Note-For-AP325/tree/main/%E7%AC%AC%E4%BA%8C%E7%AB%A0#%E7%AD%86%E8%A8%98-2) 結合 費馬小定理來求模逆元
+##### 什麼是費馬小定理
+又是數論:skull:
+
+在p為質數的情況下
+
+$$ a^{p - 1} \equiv 1 \pmod{p} $$    
+
+$$ a^p \equiv a \pmod{p}  $$
