@@ -835,11 +835,30 @@ int exp(int x, int y, int p){
 ```
 #####  筆記
 這邊用了[快速冪(點我複習)](https://github.com/Dai-Son/Note-For-AP325/tree/main/%E7%AC%AC%E4%BA%8C%E7%AB%A0#%E7%AD%86%E8%A8%98-2) 結合 費馬小定理來求模逆元
-##### 什麼是費馬小定理
-又是數論:skull:
+##### 什麼是模逆元、費馬小定理
+模逆元即 $(a*b) \pmod p = 1$的整數$b$
+
+費馬小定理..又是數論:skull:
 
 在p為質數的情況下
 
-$$ a^{p - 1} \equiv 1 \pmod{p} $$    
+$a^p \equiv a \pmod{p}$ 和他的推導 $a^{p - 1} \equiv 1 \pmod{p}$
 
-$$ a^p \equiv a \pmod{p}  $$
+而這題用「若 P 為質數，對任意正整數$a$，$(a^{(P-2)} \pmod{P})$是 $a$ 在$[1, P-1]$區間的唯 一乘法反元素。」
+
+$a^{(p-2)} \equiv R \pmod{p} ,R \in [1,p-1]$
+
+證明$b$在$[1,P-1]$內唯一
+
+設$c \in [1,p-1] \supsetneq ac \equiv1\pmod{p}$
+
+使 $ab =np+1$ 和 $ac =mp+1$
+
+$\Rightarrow a(b-c)=(n-m)p$
+
+$\Rightarrow (b-c) \equiv 0\pmod{p}$
+
+$\Rightarrow ) b\equiv c\pmod{p}$
+
+因此「若 P 為質數，對任意正整數$a$，$(a^{(P-2)} \pmod{P})$是 $a$ 在$[1, P-1]$區間的唯 一乘法反元素。」得證
+
