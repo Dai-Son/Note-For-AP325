@@ -514,7 +514,7 @@ int recur_exp(int x, int y, int p)
 模是可以一位一位做的 內容在AP325內有提到
 
 $$
-123\ mod\ p\ = ((1*10+2)*10+3)\ mod\ p
+123\pmod{p} = ((1*10+2)*10+3)\pmod{p}
 $$
 
 $$
@@ -522,7 +522,7 @@ $$
 $$
 
 $$
-((((1*10modp+2)modp)*10modp+3)modp
+((((1*10\pmod{p}+2)\pmod{p})*10\pmod{p}+3)\pmod{p}
 $$
 
 後再用上面的快速冪處理
