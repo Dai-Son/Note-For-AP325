@@ -844,7 +844,11 @@ int exp(int x, int y, int p){
 
 $a^p \equiv a \pmod{p}$ 和他的推導 $a^{p - 1} \equiv 1 \pmod{p}$
 
-而這題用「若 P 為質數，對任意正整數$a$，$(a^{(P-2)} \pmod{P})$是 $a$ 在$[1, P-1]$區間的唯 一乘法反元素。」
+而這題用「若 P 為質數，對任意正整數$a$，$(a^{(p-2)} \pmod{p})$是 $a$ 在$[1, p-1]$區間的唯 一乘法反元素。」
+
+所以只要把用快速冪處理$(a^{(p-2)} \pmod{p})$做出來就可以AC了
+
+以下為證明
 
 $a^{(p-2)} \equiv R \pmod{p} ,R \in [1,p-1]$
 
@@ -860,5 +864,9 @@ $\Rightarrow (b-c) \equiv 0\pmod{p}$
 
 $\Rightarrow ) b\equiv c\pmod{p}$
 
-因此「若 P 為質數，對任意正整數$a$，$(a^{(P-2)} \pmod{P})$是 $a$ 在$[1, P-1]$區間的唯 一乘法反元素。」得證
+因此「若 P 為質數，對任意正整數$a$，$(a^{(P-2)} \pmod{P})$是 $a$ 在$[1, p-1]$區間的唯 一乘法反元素。」得證
+## P-2-9
+### 題目
+[![P-2-9](https://cdn.discordapp.com/attachments/988162819679715408/1042844289044062260/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d018)
 
+題目麻煩起來了.-.
