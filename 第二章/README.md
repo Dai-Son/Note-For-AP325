@@ -1048,3 +1048,111 @@ signed main(){
 這樣太慢了 對於題目 $P≤1000000009，0<n<37$
 
 $n$ 是 36的情況下一定會TLE
+
+於是就會用到底下的方法 --- 折半枚舉
+
+    對於 n 個數字，我們先將他任意均分為兩半 A 與 B，
+    我們要找的解(子集合乘積等於 1) 有三種可能：
+    在 A 中、在 B 中、以及跨 AB 兩端(包含兩邊的元素)。
+    我們對 A 與 B 分別去窮舉它們的子集合乘積，而佩
+    可以找到在 A 中與在 B 中的解。對於跨兩邊的解，
+    我們以下列方式計算：
+    將其中一邊(例如 B)的所有子集合乘積予以排序後，
+    我們對每一個 A 的子集合乘積 x，
+    在 B 的子集合乘積中去搜尋 x 的模逆元(使得 xy = 1 的 y)。
+   
+而內文也有講到提升效率的辦法
+
+    有一點必須留意，我們要把 B 的子集合乘積中，將相同的乘積予以合併，
+    原因是這一題 我們需要找出組合數，若相同元素太多，
+    一個 x 需要搜尋很多的模逆元就會太花時間。 
+    至於 A 那一邊，合併也可以提升效率。
+
+<p align="right">-引述自 AP325內文</p>
+
+第二段的內容
+
+換句話其實就是要我們用set/map實作
+
+由於key的不重複性 set/map在合併上好處理的多
+
+接著按照題目的敘述做 我們就可以寫出來
+
+##### 我的作法
+
+雖然做法基本上和教授第二個方法大同小異
+
+但放上來也沒差吧
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+#define StarBurstStream ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define int long long
+
+void subset( vector<int> &V, int i, int prod, map<int,int> &M, int p );
+int exp( int x, int y, int p);
+
+signed main(){
+
+	StarBurstStream
+
+    int i, n, p;
+    vector<int> va,vb;
+
+    cin >> n >> p;
+
+    int in;
+    for (i=0;i<n/2;i++){
+        cin >> in;
+        va.push_back(in);
+    }
+    for ( ;i<n;i++){
+        cin >> in;
+        vb.push_back(in);
+    }
+
+    map<int,int> M1, M2; // Map key紀錄元素 值紀錄數量 (M[元素] = 數量)
+
+    // 用迴圈紀錄所有子集合
+    subset(va, 0, 1, M1, p);
+    subset(vb, 0, 1, M2, p);
+
+    // 全不選最後mod的值也是1 => 多出來的 要減掉
+    M1[1] -= 1;
+    M2[1] -= 1;
+
+    int ans = M1[1] + M2[1];
+
+    //對於所有左邊的子集合 求與M2子集合相乘後mod為1的可能
+    for(auto e: M1){
+        int value = e.first, counts = e.second;
+        int found = exp(value,p-2,p);
+        auto it = M2.find(found);
+        if(it != M2.end())
+            ans = (ans + (counts * it->second))%p;
+    }
+
+    cout << ans << '\n';
+    return 0;
+}
+
+//求所有子集合
+void subset( vector<int> &V, int i, int prod, map<int,int> &M, int p ){
+    // 理論上可以寫成i == v.size() 但好像大家都寫>=
+    if( i>=V.size() ){
+        M[prod] += 1;
+        return;
+    }
+    subset(V, i+1, (prod*V[i])%p, M, p); // 選
+    subset(V, i+1, prod, M, p); // 不選
+    return;
+}
+
+int exp( int x, int y, int p){
+    if( y == 0 ) return 1;
+    if( y & 1 ) return (x * exp( x, y-1, p )) % p;
+    return ( exp( x, y/2, p ) * exp( x, y/2, p ) ) %p;
+}
+
+```
+總時間複雜度是 $O(n*2^{n/2})$ 比起單純窮舉 $O(2^n)$要快得多了
