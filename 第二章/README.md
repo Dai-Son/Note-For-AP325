@@ -1236,3 +1236,98 @@ void subset( vector<int> &V, int i, int prod, vector<int> &VO, int p ){
 所以他的前一個值就是第一個小於等於要找的值的解
 
 也就是我們要找的值
+## P-2-11
+### 題目
+[![P-2-11](https://cdn.discordapp.com/attachments/988162819679715408/1045372731870420992/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d020)
+##### 教授作法
+蠻力解
+```cpp
+/* p_2_11
+Brute force method
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+#define N 200010
+int psum[N];
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int n,t,v;
+    cin>>n>>t;
+    int ans=0;
+    psum[0]=0;
+    for (int i=1;i<=n;i++) {
+        cin>>v;
+        psum[i]=psum[i-1]+v;
+        int best=psum[i], target=psum[i]-t;
+        for (int j=0;j<i;j++) {
+            if (psum[j]>=target)
+                best=min(best,psum[j]);
+        }
+        ans=max(ans,psum[i]-best);
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+
+```
+優化解
+```cpp
+// p_2_11
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n, psum=0, k, v;
+    scanf("%d%d", &n, &k);
+    set<int> S({0}); // record the prefix_sum
+    int best=0; // solution of empty range
+    for (int r=0; r<n; r++) {
+        scanf("%d", &v);
+        psum += v; //prefix-sum(r)
+        auto it=S.lower_bound(psum-k);
+        if (it!=S.end()) // found
+            best=max(best, psum-*it); //currently best
+        S.insert(psum); // insert prefix-sum(r)
+    }
+    printf("%d\n",best);
+    return 0;
+}
+
+```
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+#define StarBurstStream ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define int long long
+
+signed main(){
+
+    StarBurstStream
+
+    int n, k;
+    cin >> n >> k;
+
+    set<int> S{0};
+    int in, presum = 0;
+    int ans = -1;
+    for(int i = 0; i < n; i++){
+        cin >> in;
+        presum += in;
+        auto it = S.lower_bound(presum-k);
+        if( it != S.end() )
+            ans = max(ans, presum-(*it));
+        S.insert(presum);
+    }
+
+    cout << ans << '\n';
+
+}
+
+```
+##### 筆記
