@@ -1313,7 +1313,7 @@ signed main(){
     int n, k;
     cin >> n >> k;
 
-    set<int> S{0};
+    set<int> S{0}; 
     int in, presum = 0;
     int ans = -1;
     for(int i = 0; i < n; i++){
@@ -1331,3 +1331,12 @@ signed main(){
 
 ```
 ##### 筆記
+這邊運用到了set函式存入且搜尋
+
+這整道程式其實不難理解 簡而言之就是紀錄prefix-sum後二分搜值
+
+set的lower_bound用法是直接+.lower_bound
+
+但最容易錯的應該就是旺季要給set一個0
+
+因為假設這個prefix sum已經最接近了(presum-x)<0 如果給他第一小的數字的話會有影響的
