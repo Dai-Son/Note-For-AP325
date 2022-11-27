@@ -1339,4 +1339,73 @@ set的lower_bound用法是直接+.lower_bound
 
 但最容易錯的應該就是旺季要給set一個0
 
-因為假設這個prefix sum已經最接近了(presum-x)<0 如果給他第一小的數字的話會有影響的
+因為假設這個prefix sum已經最接近了(presum-x)<0 如果給他第一小的正數的話會有影響的
+## Q-2-12
+### 題目
+[![Q-2-12](https://cdn.discordapp.com/attachments/988162819679715408/1046084739142008903/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d021)
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+#define StarBurstStream ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define int long long
+
+signed main(){
+
+    StarBurstStream
+    int i, o, p;
+
+    int k, m, n;
+    cin >> k >> m >> n;
+
+    vector<vector<int>> presum;
+    vector<int> pushin;
+    for( i = 0 ; i < n ; i++ ){
+        pushin.push_back(0);
+    }
+    presum.push_back(pushin);
+
+
+    for( i = 0 ; i < m ; i++ ){
+        vector<int> pushin;
+        for( o = 0 ; o < n ; o++ ){
+            int in;cin >> in;
+            pushin.push_back(in);
+        }
+        presum.push_back(pushin);
+    }
+
+    for( i = 2 ; i <= m ; i++ ){
+        for( o = 0 ; o < n ; o++ ){
+            presum[i][o] += presum[i-1][o];
+        }
+    }
+
+    int ans = (1<<31);
+    for( i = 0 ; i < m ; i++ ){
+        for( o = i + 1 ; o <= m ; o++ ){
+            set<int> S{0};
+            int ps = 0;
+            for( p = 0 ; p < n ; p++ ){
+                ps += presum[o][p]-presum[i][p];
+                auto it = S.lower_bound(ps-k);
+                if( it != S.end() )
+                    ans = max( ans, ps-(*it) );
+                S.insert(ps);
+            }
+        }
+    }
+
+    cout << ans << '\n';
+
+}
+
+```
+##### 筆記
+
+這題先做每列的前綴和
+
+每列的前綴和處理完後用兩個for 以尾-首的方式得出分別處理每種寬度矩陣的前綴和
+
+因為不同寬度的矩陣不能處理 所以在做一個新的寬度的矩陣要把Set重製
