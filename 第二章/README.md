@@ -1409,3 +1409,6 @@ signed main(){
 每列的前綴和處理完後用兩個for 以尾-首的方式得出分別處理每種寬度矩陣的前綴和
 
 因為不同寬度的矩陣不能處理 所以在做一個新的寬度的矩陣要把Set重製
+## Q-2-13
+### 題目
+[![Q-2-13](https://cdn.discordapp.com/attachments/988162819679715408/1046813710427103383/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d022)
