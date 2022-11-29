@@ -598,7 +598,7 @@ int fib(int m){
 }
 
 ```
-#####筆記
+##### 筆記
 根據AP325的內容有提到
 
 ![Fibonacci](https://miro.medium.com/max/640/1*mgeTnofXk6e-OK68tRT9VQ.png)
@@ -1412,3 +1412,133 @@ signed main(){
 ## Q-2-13
 ### 題目
 [![Q-2-13](https://cdn.discordapp.com/attachments/988162819679715408/1046813710427103383/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d022)
+##### 網路上的寫法
+Self edited
+```cpp
+#include<iostream>
+#include<stdio.h>
+#include<string.h>
+using namespace std;
+#define int long long
+int p = 10*10*10*10*10*10*10*10*10+9;
+struct Node
+{
+    int e[2][2];
+    Node()
+    {
+        memset(e,0,sizeof(e));
+    }
+};
+Node mul(Node a,Node b)
+{
+    Node c;
+
+    for(int i=0; i<2; i++)
+        for(int j=0; j<2; j++)
+            for(int k=0; k<2; k++)
+            {
+                c.e[i][j]+=(a.e[i][k]*b.e[k][j])%p;
+            }
+    return c;
+}
+
+Node quick_mi(Node a,int b)
+{
+    Node c;
+    c.e[0][0]=1;
+    c.e[1][1]=1;
+    while(b)
+    {
+        if(b&1)
+            c=mul(c,a);
+        b>>=1;
+        a=mul(a,a);
+    }
+    return c;
+}
+signed main()
+{
+    int x,y,n;
+    cin >> x >> y >> n;
+
+    Node A;
+    A.e[0][0]=x;
+    A.e[0][1]=2*y;
+    A.e[1][0]=y;
+    A.e[1][1]=x;
+    A=quick_mi(A,n);
+    cout << A.e[0][0] % p << " " << A.e[1][0] % p <<'\n';
+    return 0;
+}
+
+```
+##### 我的寫法
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+#define StarBurstStream ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define int long long
+int p = 10*10*10*10*10*10*10*10*10+9;
+
+vector<vector<int>> multipy( vector<vector<int>> a, vector<vector<int>> b );
+vector<vector<int>> exp( vector<vector<int>> n1, int n );
+
+signed main(){
+
+    StarBurstStream
+    int x, y, n;cin >> x >> y >> n;
+
+    vector<vector<int>> n1
+    {
+        { x, 2*y },
+        { y, x }
+    };
+
+    vector<vector<int>> ans = exp( n1, n );
+    cout << ans[0][0] % p << " " << ans[1][0] % p << '\n';
+
+}
+vector<vector<int>> exp( vector<vector<int>> n1, int n ){
+    if( n == 0 ){
+        return { {1,0},{0,1} };
+    }else if( n == 1 ){
+        return n1;
+    }else if( n & 1 ){
+        return multipy( n1, exp( n1, n-1 ) );
+    }else{
+        vector<vector<int>> re = exp( n1, n/2 )
+        return multipy( re, re );
+    }
+}
+vector<vector<int>> multipy( vector<vector<int>> a, vector<vector<int>> b ){
+    vector<vector<int>> c{{0, 0},{0, 0}};
+    for(int i=0; i<2; i++)
+        for(int j=0; j<2; j++)
+            for(int k=0; k<2; k++)
+            {
+                c[i][j]+=(a[i][k]*b[k][j])%p;
+            }
+    return c;
+
+}
+
+```
+##### 筆記
+推導的過程
+
+設$(x+y\sqrt{2})^n  = A(n)+B(n)\sqrt{2}$
+
+$(x+y\sqrt{2})^{(n+1)}  = (x+y\sqrt{2})(x+y\sqrt{2})^n=(x+y\sqrt{2})(A(n)+B(n)\sqrt{2})$
+
+得
+
+$A(n+1)=x*A(n)+2*y*B(n)$ 
+
+$B(n+1)=y*A(n)+x*B(n)$
+
+因此做矩陣
+
+設$M =\begin{bmatrix}x&2y\\y&x\end{bmatrix}^n$
+
+得$A(n)=M[0][0]$ 和 $B(n)=M[1][0]$
