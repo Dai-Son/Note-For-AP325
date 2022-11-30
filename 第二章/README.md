@@ -1,3 +1,4 @@
+
 # 第二章
 小提醒 當想不通的時候可以假設後列出來
 
@@ -1541,7 +1542,7 @@ $$
 B(n+1)=y*A(n)+x*B(n)
 $$
 
-因此做矩陣
+把A(n)、B(n)當向量做矩陣得
 
 $$
 M =\begin{bmatrix}x&2y \\
@@ -1549,3 +1550,7 @@ y&x\end{bmatrix}^n
 $$
 
 得 $A(n)=M[0][0]$ 和 $B(n)=M[1][0]$
+## Q-2-14
+### 題目
+[![Q-2-14-1](https://cdn.discordapp.com/attachments/988162819679715408/1047538081638666280/image.png)![Q-2-14-2](https://cdn.discordapp.com/attachments/988162819679715408/1047538201323114526/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d023)
+##### 我的作法
