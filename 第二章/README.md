@@ -1532,16 +1532,20 @@ vector<vector<int>> multipy( vector<vector<int>> a, vector<vector<int>> b ){
  $(x+y\sqrt{2})^{(n+1)}  = (x+y\sqrt{2})(x+y\sqrt{2})^n=(x+y\sqrt{2})(A(n)+B(n)\sqrt{2})$
 
 得
+
 $$
 A(n+1)=x*A(n)+2*y*B(n)
 $$
+
 $$
 B(n+1)=y*A(n)+x*B(n)
 $$
+
 因此做矩陣
 
 $$
-M =\begin{bmatrix}x&2y\\y&x\end{bmatrix}^n
+M =\begin{bmatrix}x&2y \\
+y&x\end{bmatrix}^n
 $$
 
 得 $A(n)=M[0][0]$ 和 $B(n)=M[1][0]$
