@@ -10,7 +10,7 @@ map<int,int> rh;
 
 int hl[100005],hr[100005];
 
-void rec( int l, int r, int w );
+void Fill( int l, int r, int w );
 
 signed main(){
 
@@ -43,11 +43,24 @@ signed main(){
         }
     }
 
-
-
-
+    Fill( i, i+1, w )
 
 }
-void rec( int l, int r, int w ){
+void Fill( int l, int r, int w ){
+    if( h[r] > h[l] ){
+        int width = r-l;
+        if( width*h[l] >= w ){
+            int h = w/width;
+            for( int i = l ; i < l+width ; i++ ){
+                w -= h-ans[i];
+                ans[i] = h;
+            }
+        }else{
+            for( int i = l ; i < l+width ; i++ ){
+                w -= h[l]-ans[i];
+                ans[i] = h[l];
+            }
 
+        }
+    }
 }
