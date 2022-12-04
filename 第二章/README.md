@@ -1553,4 +1553,7 @@ $$
 ## Q-2-14
 ### 題目
 [![Q-2-14-1](https://cdn.discordapp.com/attachments/988162819679715408/1047538081638666280/image.png)![Q-2-14-2](https://cdn.discordapp.com/attachments/988162819679715408/1047538201323114526/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d023)
-##### 我的作法
+
+最後決定先跳過了..
+
+雖然很不甘心 下次一定會處理掉的
