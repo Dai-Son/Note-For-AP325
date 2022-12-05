@@ -1557,3 +1557,6 @@ $$
 最後決定先跳過了..
 
 雖然很不甘心 下次一定會處理掉的
+## P-2-15
+### 題目
+[![P-2-15](https://cdn.discordapp.com/attachments/988162819679715408/1049345532931362927/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d024)
