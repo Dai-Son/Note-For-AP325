@@ -91,3 +91,67 @@ int main() {
 
 ```
 ##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+#define StarBurstStream ios::sync_with_stdio(0);cin.tie(0);
+#define int long long
+
+signed main(){
+
+    StarBurstStream
+    int i;
+
+    int parent[100005]={0};
+    int h[100005]={0};
+    int children[100005];
+    queue<int> Q;
+
+    int N;cin >> N;
+
+    // 輸入 紀錄有幾個孩子 和有誰有家長
+    int k;
+    for( i = 1 ; i <= N ; i++ ){
+        cin >> k;
+        children[i] = k;
+        if(k == 0)
+            Q.push(i);
+        while(k){
+            int child;cin >> child;
+            parent[child]=i;
+            k--;
+        }
+    }
+
+    int rootans, hans=0;
+    while(1){
+        int v = Q.front();
+        Q.pop();
+        hans += h[v];
+        int p = parent[v];
+        if(p == 0){
+            rootans = v;
+            break;
+        }
+        h[p] = max(h[p], h[v]+1);
+        children[p]--;
+        if(children[p] == 0)
+            Q.push(p);
+    }
+    cout << rootans << '\n' << hans << '\n';
+}
+
+```
+##### 筆記
+我的作法大致與教授的無異
+
+bottom-up 順序 用Queue處理
+
+只要把家長的每個孩子跑過一次 就可以記錄到這個家長的高
+
+又因為孩子已經處理完了 所以可以去掉(剪枝) 然後再把自己當孩子處理
+
+另外 這題也有運用在P-8-4中 我有稍微看了一下
+
+恩... 樹 ... DFS ... top-down DP 那是之後的事了:P
