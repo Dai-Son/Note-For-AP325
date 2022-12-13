@@ -31,7 +31,7 @@ vector<vector<int>> exp( vector<vector<int>> n1, int n ){
     }else if( n & 1 ){
         return multipy( n1, exp( n1, n-1 ) );
     }else{
-        vector<vector<int>> re = exp( n1, n/2 )
+        vector<vector<int>> re = exp( n1, n/2 );
         return multipy( re, re );
     }
 }
