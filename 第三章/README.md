@@ -155,3 +155,5 @@ bottom-up 順序 用Queue處理
 另外 這題也有運用在P-8-4中 我有稍微看了一下
 
 恩... 樹 ... DFS ... top-down DP 那是之後的事了:P
+## P-3-2
+### 題目[![P-3-2](https://cdn.discordapp.com/attachments/988162819679715408/1052625255430111312/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d026)
