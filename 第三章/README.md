@@ -146,7 +146,7 @@ signed main(){
 ##### 筆記
 我的作法大致與教授的無異
 
-bottom-up 順序 用Queue處理
+bottom-up 順序 用Queue處理 利用其FIFO(First-In First-Out)的原理排列要處理的數值
 
 只要把家長的每個孩子跑過一次 就可以記錄到這個家長的高
 
@@ -157,3 +157,161 @@ bottom-up 順序 用Queue處理
 恩... 樹 ... DFS ... top-down DP 那是之後的事了:P
 ## P-3-2
 ### 題目[![P-3-2](https://cdn.discordapp.com/attachments/988162819679715408/1052625255430111312/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d026)
+##### 教授的作法
+```cpp
+// p3-2 parenthesis matching, using STL
+#include <bits/stdc++.h>
+using namespace std;
+
+int sol() {
+    stack<int> S;
+    char in[210], ch[7]="([{)]}";
+    if (scanf("%s",in)==EOF) return -1;
+    // fprintf(stderr,"input length=%d\n",strlen(in));
+    bool error=false;
+    for (int i=0,len=strlen(in);i<len;i++) {
+        int sym=strchr(ch,in[i])-ch;
+        if (sym>=6) {
+            fprintf(stderr,"i=%d, %d, %c",i, sym, in[i]);
+            return -1;
+        }
+        assert(sym>=0 && sym<6);
+        if (sym<3) { // left
+            S.push(sym);
+        }
+        else {
+            if (S.empty() || sym!=S.top()+3) {//mismatch
+                error=true;
+                break;
+            }
+            //match
+            S.pop();
+        }
+    }
+    if (!S.empty()) error=true;
+    printf((error)?"no\n":"yes\n");
+    return 0;
+}
+int main() {
+    while (sol()==0) ;
+    return 0;
+}
+
+```
+```cpp
+// p3-2 parenthesis matching, no STL
+#include <bits/stdc++.h>
+
+int main() {
+  char in[210], ch[7]="([{)]}";
+  int S[210], top; // stack
+  while (scanf("%s",in)!=EOF) {
+    top=-1; // clear stack
+    int len=strlen(in);
+    assert(len<=150);
+    bool error=false;
+    for (int i=0;i<len;i++) {
+        int k=strchr(ch,in[i])-ch;
+        //or using: for (k=0; k<6 && ch[k]!=in[i]; k++);
+        assert(k<6); // no invalid char
+        if (k<3) // left
+            S[++top]=k; // push
+        else {
+            if (top<0 || k!=S[top]+3) { //mismatch
+                error=true;
+                break;
+            }
+            top--; // pop
+        }
+    }
+    if (top>=0) error=true;
+    printf((error)?"no\n":"yes\n");
+  }
+  return 0;
+}
+
+
+```
+```cpp
+// p3-2 parenthesis matching, using STL
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+  char in[210], ch[7]="([{)]}";
+  while (scanf("%s",in)!=EOF) {
+    stack<int> S;
+    // fprintf(stderr,"input length=%d\n",strlen(in));
+    bool error=false;
+    for (int i=0,len=strlen(in);i<len;i++) {
+        int sym=strchr(ch,in[i])-ch;
+        if (sym>=6) {
+            fprintf(stderr,"i=%d, %d, %c",i, sym, in[i]);
+            return -1;
+        }
+        assert(sym>=0 && sym<6);
+        if (sym<3) { // left
+            S.push(sym);
+        }
+        else {
+            if (S.empty() || sym!=S.top()+3) {//mismatch
+                error=true;
+                break;
+            }
+            //match
+            S.pop();
+        }
+    }
+    if (!S.empty()) error=true;
+    printf((error)?"no\n":"yes\n");
+  }
+  return 0;
+}
+
+```
+##### 我的作法
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+#define StarBurstStream ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+
+int sol();
+signed main(){
+    while(!sol());
+
+    return 0;
+}
+
+int sol(){
+    stack<int> S;
+    char in[210];
+    char ch[7]="([{)]}";
+
+    bool error = false;
+    if( cin >> in ){
+        for( int i = 0 ; i < strlen(in) ; i++ ){
+            int mnum = strchr(ch, in[i]) - ch;
+            if( mnum < 3 ){
+                S.push(mnum);
+            }else{
+                if( mnum - S.top() != 3 ){
+                    error = true;
+                    break;
+                }else{
+                    S.pop();
+                }
+            }
+        }
+        if( error == true || !S.empty() ){
+            cout << "no" << '\n';
+            return 0;
+        }
+        cout << "yes" << '\n';
+        return 0;
+    }
+    return -1;
+}
+
+```
