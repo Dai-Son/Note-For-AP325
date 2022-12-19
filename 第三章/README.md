@@ -329,4 +329,8 @@ int sol(){
 整個右括弧檢查完後 最後檢查左括弧有沒有多
 
 就能求出到底成不成立了 :thumbsup:
+## Q-3-3
+### 題目
+[![Q-3-3](https://cdn.discordapp.com/attachments/988162819679715408/1054426731508932668/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d027)
+
 
