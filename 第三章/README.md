@@ -332,5 +332,7 @@ int sol(){
 ## Q-3-3
 ### 題目
 [![Q-3-3](https://cdn.discordapp.com/attachments/988162819679715408/1054426731508932668/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d027)
+##### 筆記
+這題好像要懂要怎麼把什麼中序式轉後序式
 
-
+怎樣怎樣的 總之給我點時間想想
