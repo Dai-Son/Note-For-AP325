@@ -329,10 +329,15 @@ int sol(){
 整個右括弧檢查完後 最後檢查左括弧有沒有多
 
 就能求出到底成不成立了 :thumbsup:
+
+另外 這邊另外開一個函式的原因是因為
+
+每遞迴一次需要把stack pop光一次
+
+用函式就可以縮減整個過程
 ## Q-3-3
 ### 題目
 [![Q-3-3](https://cdn.discordapp.com/attachments/988162819679715408/1054426731508932668/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d027)
+##### 我的作法
 ##### 筆記
-這題好像要懂要怎麼把什麼中序式轉後序式
 
-怎樣怎樣的 總之給我點時間想想
