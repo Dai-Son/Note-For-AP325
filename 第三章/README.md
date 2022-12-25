@@ -341,3 +341,4 @@ int sol(){
 ##### 我的作法
 ##### 筆記
 
+https://www.youtube.com/watch?v=fz7ZgqGFHx4
