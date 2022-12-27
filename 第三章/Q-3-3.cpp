@@ -4,19 +4,31 @@ using namespace std;
 #define StarBurstStream ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define int long long
 
-int pr(string in);
+int pr(char in);
 
 signed main(){
 
-    int i;
-
     char in[110];
+    char postfix[110];
     cin >> in;
-    len = strlen(in);
+    int len = strlen(in);
+    cout << len;
+    stack<char> S;
+    S.push('|');
+    int i, j;
+    for( i = 0, j = 0 ; i < len ; i++ ){
+        if( in[i]-'0' < 0 ){
+            while(pr(S.top())>=pr(in[i]) && S.top() != '|'){
+                postfix[j++] = S.top();
+                S.pop();
+            }
+            S.push(in[i]);
+        }else{
+            postfix[j++] = in[i];
+        }
+    }
+    cout << postfix;
 
-    Stack<string> S;
-
-    for( i = 0 ; i < len ; i++ )
 
 }
 int pr(char in){
