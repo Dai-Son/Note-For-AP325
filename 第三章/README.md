@@ -339,6 +339,95 @@ int sol(){
 ### 題目
 [![Q-3-3](https://cdn.discordapp.com/attachments/988162819679715408/1054426731508932668/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d027)
 ##### 我的作法
-##### 筆記
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
 
-https://www.youtube.com/watch?v=fz7ZgqGFHx4
+#define StarBurstStream ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+
+int pr(char in);
+int eval(char* post, int len);
+signed main(){
+
+    char in[110] = {'\0'};
+    char postfix[110] = {'\0'};
+    cin >> in;
+    int len = strlen(in);
+    stack<char> S;
+    S.push('|');
+    int i, j;
+    for( i = 0, j = 0 ; i < len ; i++ ){
+        if( in[i]-'0' < 0 ){
+            while(pr(S.top())>=pr(in[i]) && S.top() != '|'){
+                postfix[j++] = S.top();
+                S.pop();
+            }
+            S.push(in[i]);
+        }else{
+            postfix[j++] = in[i];
+        }
+    }
+    while( S.top() != '|' ){
+        postfix[j++] = S.top();
+        S.pop();
+    }
+
+    cout << eval(postfix , len) << '\n';
+
+
+}
+int pr(char in){
+    switch(in){
+        case '+': case '-': return 1;
+        case '*': case '/': return 2;
+        default: return 0;
+    }
+}
+int eval(char* post, int len){
+    stack<int> S;
+    int i;
+    for( i = 0 ; i < len ; i++){
+        if( post[i]-'0' < 0 ){
+            int num2 = S.top();
+            S.pop();
+            int num1 = S.top();
+            S.pop();
+            switch(post[i]){
+                case '+':
+                    S.push(num1+num2);
+                    break;
+                case '-':
+                    S.push(num1-num2);
+                    break;
+                case '*':
+                    S.push(num1*num2);
+                    break;
+                case '/':
+                    S.push(num1/num2);
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            S.push(post[i]-'0');
+        }
+    }
+    return S.top();
+}
+
+```
+##### 筆記
+這邊使用的是中序式轉後序式的做法
+
+可以觀看[這部影片](https://www.youtube.com/watch?v=fz7ZgqGFHx4) 講的滿詳細的
+
+而我自己寫的這段有幾個要注意的點
+
+- char要記得給 \0的值 不然輸出會很奇怪
+
+- stack如果無東西存入後用top()會直接炸開 所以我多先push一個其他符號來避免情況發生
+
+最後照後序式的定義算(遇到運算子計算前面兩個運算元)
+
+就是最後的答案了
