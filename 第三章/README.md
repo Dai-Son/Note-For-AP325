@@ -431,3 +431,6 @@ int eval(char* post, int len){
 最後照後序式的定義算(遇到運算子計算前面兩個運算元)
 
 就是最後的答案了
+## P-3-4
+### 題目
+]![P-3-4](https://cdn.discordapp.com/attachments/988162819679715408/1058067969130897539/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d028)
