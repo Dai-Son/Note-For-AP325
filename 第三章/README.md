@@ -435,3 +435,86 @@ int eval(char* post, int len){
 ### 題目
 ]![P-3-4](https://cdn.discordapp.com/attachments/988162819679715408/1058067969130897539/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d028)
 ##### 教授的做法
+```cpp
+// p_3_4a, stack for index
+#include <bits/stdc++.h>
+using namespace std;
+#define N 300010
+#define oo 10000001
+int a[N];
+stack<int> S; // for index
+int main() {
+    int i,n;
+    long long total=0; // total distance
+	scanf("%d",&n);
+	S.push(0);
+	a[0]=oo;
+	for (i=1; i<=n; i++) {
+        scanf("%d",&a[i]);
+	}
+	for (i=1; i<=n; i++) {
+        while (a[S.top()] <= a[i])
+            S.pop();
+        total += i - S.top();
+        S.push(i);
+	}
+	printf("%lld\n",total);
+    return 0;
+}
+
+```
+```cpp
+// p_3_4b, stack
+#include <bits/stdc++.h>
+using namespace std;
+#define N 300010
+#define oo 10000001
+stack<pair<int,int>> S; // (b[i],i)
+int main() {
+    int i,bi,n;
+    long long total=0; // total distance
+	scanf("%d",&n);
+	S.push({oo<<1,0});
+	for (i=1; i<=n; i++) {
+        scanf("%d",&bi);
+        // <=bi is useless
+        while (S.top().first <= bi)
+            S.pop();
+        total += i - S.top().second;
+        S.push({bi,i});
+	}
+	printf("%lld\n",total);
+    return 0;
+}
+
+```
+```cpp
+// p_3_4c, using multimap
+#include <bits/stdc++.h>
+using namespace std;
+#define N 300010
+#define oo 10000001
+int a[N];
+int main() {
+    int i,n;
+    long long total=0; // total distance
+	scanf("%d",&n);
+	a[0]=oo;
+	for (i=1; i<=n; i++) {
+        scanf("%d",&a[i]);
+	}
+	multimap<int,int> M; //(a[i],i) of unsolved
+	for (i=n; i>=0; i--) {
+        auto it=M.begin();
+        // find the whose solution is i
+        while (it!=M.end()&& it->first<a[i]) {
+            total += it->second - i; // add distance
+            it=M.erase(it); // erase and point to next
+        }
+        M.insert({a[i],i});
+	}
+	printf("%lld\n",total);
+    return 0;
+}
+
+```
