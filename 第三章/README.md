@@ -433,7 +433,7 @@ int eval(char* post, int len){
 就是最後的答案了
 ## P-3-4
 ### 題目
-]![P-3-4](https://cdn.discordapp.com/attachments/988162819679715408/1058067969130897539/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d028)
+[![P-3-4](https://cdn.discordapp.com/attachments/988162819679715408/1058067969130897539/image.png)](https://judge.tcirc.tw/ShowProblem?problemid=d028)
 ##### 教授的做法
 ```cpp
 // p_3_4a, stack for index
