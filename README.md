@@ -10,6 +10,14 @@
 如果發現任何[問題](https://github.com/Dai-Son/Note-For-AP325/issues/new)歡迎提出:> 
 
 ~~要幫忙寫的也可以 [Pull Request](https://github.com/Dai-Son/Note-For-AP325/pulls)~~
+## 動機
+如果你是想看詳細的
+
+我建議直接去看[AP325](https://drive.google.com/drive/u/0/folders/10hZCMHH0YgsfguVZCHU7EYiG8qJE5f-m)
+
+這邊傾向於用簡單的陳述方式理解題目
+
+和一些練習題的答案的集中處
 ## 目錄
 
 [第一章](https://github.com/Dai-Son/Note-For-AP325/tree/main/第一章#第一章)
